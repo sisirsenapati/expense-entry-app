@@ -1,5 +1,5 @@
 const SCRIPT_URL =
-"https://YOUR-EXISTING-APPSCRIPT-URL";
+"https://script.google.com/macros/s/AKfycbwYfyRniY8lonIE6MN17GtrzjGrMjAF_dixD2Zg4BbTwt3I9LcdwRqqAIx9gobVZsiK/exec";
 
 document
 .getElementById("submitBtn")
