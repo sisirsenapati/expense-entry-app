@@ -38,10 +38,15 @@ async function submitData(){
             SCRIPT_URL,
             {
                 method:"POST",
+                mode: "no-cors",
                 headers:{
                     "Content-Type":"application/json"
                 },
-                body:JSON.stringify(payload)
+                body:JSON.stringify({
+                        amount: amount,
+                        upiName: upiName,
+                        purpose: purpose
+                      })
             }
         );
 
