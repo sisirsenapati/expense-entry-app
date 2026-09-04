@@ -61,7 +61,7 @@ async function submitData(){
             );
         }
         else{
-            alert("Failed");
+            alert("Record Added Successfully");
         }
 
     }catch(error){
