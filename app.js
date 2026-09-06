@@ -33,7 +33,8 @@ async function submitData(){
     };
 
     try{
-
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("submitBtn").disabled = true;
         const response = await fetch(
             SCRIPT_URL,
             {
@@ -63,7 +64,8 @@ async function submitData(){
         else{
             alert("Record Added Successfully");
         }
-
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("submitBtn").disabled = false;
     }catch(error){
 
         console.error(error);
