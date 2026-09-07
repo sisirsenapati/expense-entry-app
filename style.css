@@ -102,3 +102,23 @@ button:hover{
     0%{transform:rotate(0deg);}
     100%{transform:rotate(360deg);}
 }
+.input-group{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.input-group input,
+.input-group textarea{
+    flex:1;
+}
+
+.mic-btn{
+    width:50px;
+    min-width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;
+}
