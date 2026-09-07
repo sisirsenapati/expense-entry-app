@@ -102,7 +102,7 @@ function startSpeech(fieldId) {
     const recognition =
         new SpeechRecognition();
 
-    recognition.lang = "en-IN";
+    recognition.lang = "or-IN";//"en-IN";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
