@@ -86,16 +86,18 @@ function showToast(message){
         toast.style.display = "none";
     },3000);
 }
-function startSpeech(fieldId) {
+function startSpeech1(fieldId) {
 
     const SpeechRecognition =
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
 
-    if (!SpeechRecognition) {
+    if(!SpeechRecognition){
+
         alert(
-            "Speech recognition is not supported in this browser."
+            "Speech Recognition not supported"
         );
+
         return;
     }
 
@@ -103,28 +105,132 @@ function startSpeech(fieldId) {
         new SpeechRecognition();
 
     recognition.lang = "en-IN";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+
+    const micButton =
+        document.getElementById(
+            fieldId + "Mic"
+        );
+
+    const status =
+        document.getElementById(
+            fieldId + "Status"
+        );
+
+    recognition.onstart = () => {
+
+        micButton.classList.add(
+            "listening"
+        );
+
+        status.innerHTML = `
+            <span class="dot"></span>
+            Listening...
+        `;
+    };
 
     recognition.start();
 
-    recognition.onstart = () => {
-        console.log("Listening...");
+    recognition.onresult = (event) => {
+
+        const text =
+            event.results[0][0].transcript;
+
+        document.getElementById(
+            fieldId
+        ).value = text;
     };
+
+    recognition.onend = () => {
+
+        micButton.classList.remove(
+            "listening"
+        );
+
+        status.innerHTML =
+            "✓ Voice captured";
+    };
+
+    recognition.onerror = () => {
+
+        micButton.classList.remove(
+            "listening"
+        );
+
+        status.innerHTML =
+            "⚠ Unable to recognize speech";
+    };
+}
+function startSpeech(fieldId){
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+        alert("Speech Recognition not supported");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+
+    const input =
+        document.getElementById(fieldId);
+
+    const mic =
+        document.getElementById(fieldId + "Mic");
+
+    recognition.onstart = () => {
+
+        mic.classList.add("listening");
+
+        input.classList.add(
+            "input-recording"
+        );
+
+        input.placeholder =
+            "🎤 Listening...";
+    };
+
+    recognition.start();
 
     recognition.onresult = (event) => {
 
         const speechText =
             event.results[0][0].transcript;
 
-        document.getElementById(fieldId).value =
-            speechText;
+        input.value = speechText;
     };
 
-    recognition.onerror = (event) => {
-        console.error(event.error);
-        alert(
-            "Speech recognition failed."
+    recognition.onend = () => {
+
+        mic.classList.remove(
+            "listening"
         );
+
+        input.classList.remove(
+            "input-recording"
+        );
+
+        if(!input.value){
+            input.placeholder =
+                "Enter Value";
+        }
+    };
+
+    recognition.onerror = () => {
+
+        mic.classList.remove(
+            "listening"
+        );
+
+        input.classList.remove(
+            "input-recording"
+        );
+
+        input.placeholder =
+            "Try Again";
     };
 }
