@@ -86,3 +86,45 @@ function showToast(message){
         toast.style.display = "none";
     },3000);
 }
+function startSpeech(fieldId) {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert(
+            "Speech recognition is not supported in this browser."
+        );
+        return;
+    }
+
+    const recognition =
+        new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onstart = () => {
+        console.log("Listening...");
+    };
+
+    recognition.onresult = (event) => {
+
+        const speechText =
+            event.results[0][0].transcript;
+
+        document.getElementById(fieldId).value =
+            speechText;
+    };
+
+    recognition.onerror = (event) => {
+        console.error(event.error);
+        alert(
+            "Speech recognition failed."
+        );
+    };
+}
